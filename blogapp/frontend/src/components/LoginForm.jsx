@@ -5,6 +5,7 @@ import PropTypes from "prop-types"
 import { setNotification } from "../reducers/flashmessageReducer"
 import { useDispatch, useSelector} from "react-redux"
 import { loginUser } from "../reducers/userReducer"
+import { LoginFormCallback } from "./LoginFormCallback"
 
 export const LoginForm = () => {
   const [username, setUsername] = useState("")
@@ -46,53 +47,57 @@ export const LoginForm = () => {
   }
 
   return (
-    <div>
-      {displayForm ? (
-        <>
-          <h2 className="font-bold">Login</h2>
-          <form className="max-w-36 justify-center flex flex-col">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="username">Username</label>
-              <input
-                className="text-gray-950"
-                type="text"
-                id="username"
-                name="username"
-                onChange={handleUserChange}
-              />
-              <label htmlFor="password">Password</label>
-              <input
-                className="text-gray-950"
-                type="password"
-                id="password"
-                name="password"
-                onChange={handlePasswordChange}
-              />
-              <button
-                className="bg-gray-900 text-white p-2 rounded-md"
-                type="submit"
-                onClick={submitLogin}
-              >
-                Login
-              </button>
-              <button
-                className="bg-gray-900 text-white p-2 rounded-md"
-                onClick={() => setDisplayForm(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </>
-      ) : (
-        <button
-          className="bg-gray-900 text-white p-2 rounded-md"
-          onClick={() => setDisplayForm(true)}
-        >
-          Login
-        </button>
-      )}
-    </div>
+    <> { !user ? (
+      <div>
+        {displayForm ? (
+          <>
+            <h2 className="font-bold">Login</h2>
+            <form className="max-w-36 justify-center flex flex-col">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="username">Username</label>
+                <input
+                  className="text-gray-950"
+                  type="text"
+                  id="username"
+                  name="username"
+                  onChange={handleUserChange}
+                />
+                <label htmlFor="password">Password</label>
+                <input
+                  className="text-gray-950"
+                  type="password"
+                  id="password"
+                  name="password"
+                  onChange={handlePasswordChange}
+                />
+                <button
+                  className="bg-gray-900 text-white p-2 rounded-md"
+                  type="submit"
+                  onClick={submitLogin}
+                >
+                  Login
+                </button>
+                <button
+                  className="bg-gray-900 text-white p-2 rounded-md"
+                  onClick={() => setDisplayForm(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </>
+        ) : (
+          <button
+            className="bg-gray-900 text-white p-2 rounded-md"
+            onClick={() => setDisplayForm(true)}
+          >
+            Login
+          </button>
+        )}
+      </div> )
+      : <LoginFormCallback user={user} />
+    }
+    </>
   )
 }
 

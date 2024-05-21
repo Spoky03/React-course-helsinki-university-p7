@@ -3,10 +3,12 @@ import noteService from "../services/noteService"
 import { useDispatch } from "react-redux"
 import { setNotification } from "../reducers/flashmessageReducer"
 import { createBlog } from "../reducers/blogReducer"
+import { Navigate, useNavigate } from "react-router-dom"
 
 export const AddBlog = () => {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleAddBlog = async (event) => {
     event.preventDefault()
@@ -20,6 +22,7 @@ export const AddBlog = () => {
     event.target.title.value = ""
     event.target.author.value = ""
     event.target.url.value = ""
+    navigate('/blogs')
   }
 
 

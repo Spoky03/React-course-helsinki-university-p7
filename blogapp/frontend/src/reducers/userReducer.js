@@ -43,13 +43,24 @@ export const loginUser = (credentials) => {
     } catch (exception) {
       dispatch(setNotification("Wrong username or password", 'error'))
     }
-    return user
+    return user 
   }
 }
 export const logoutUser = () => {
   return async dispatch => {
     window.localStorage.removeItem("loggedBlogappUser")
     dispatch(logout())
+    dispatch(setNotification('Logged out successfully', 'info'))
+  }
+}
+export const autoLogin = () => {
+  return async dispatch => {
+    const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser")
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      noteService.setToken(user.token)
+      dispatch(login(user))
+    }
   }
 }
 

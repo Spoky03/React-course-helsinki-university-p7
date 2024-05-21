@@ -1,17 +1,20 @@
-import Togglable from "./Togglable";
+import { Link } from "react-router-dom"
 import { useDispatch } from "react-redux";
 import { likeBlog } from "../reducers/blogReducer";
-export const BlogCard = ({ user, blog, blogRef, handleDelete }) => {
+export const BlogCard = ({ user, blog }) => {
   const dispatch = useDispatch();
 
   const handleLike = async () => {
     dispatch(likeBlog(blog._id));
   }
+  const handleDelete = async (id) => {
+    dispatch(deleteBlog(id))
+  }
 
+  if (!user || !blog ) return null
   return (
     <div className="blogCard">
-      <h3 className="font-bold">{blog.title}</h3>
-      <Togglable buttonLabel="View" ref={blogRef}>
+      <Link to={`/blogs/${blog._id}`}><h3 className="font-bold">{blog.title}</h3></Link>
         <>
           <span>{blog.author}</span>
           <div className="mt-3">{blog.url}</div>
@@ -23,15 +26,12 @@ export const BlogCard = ({ user, blog, blogRef, handleDelete }) => {
               }
               onClick={handleLike}
             > 
-              { user &&
               <div data-testid="likeButton" className="rounded-full bg-gray-950 p-1 w-8 text-center">
                 {blog.likes}
               </div>
-              }
             </button>
           }
         </>
-      </Togglable>
       <div>
             <button data-testid="deleteButton"
             // disabled={user && (blog.user.id === user.id) ? false : true}
