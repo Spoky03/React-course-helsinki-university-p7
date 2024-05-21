@@ -16,7 +16,7 @@ export const Blogs = () => {
         {blogs.map((blog, index) => (
           <li
             key={index}
-            className="bg-gray-900 p-3 rounded-md relative"
+            className=""
           >
             <BlogCard
               user={user}

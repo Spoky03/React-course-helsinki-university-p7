@@ -9,7 +9,7 @@ import { loginUser, logoutUser, autoLogin} from './reducers/userReducer'
 import userService from "./services/userService"
 import { Link, Route, Routes, Navigate, useParams, useNavigate, useMatch} from 'react-router-dom'
 import { UserCard } from "./components/UsersList"
-import { BlogCard } from "./components/BlogCard"
+import { BlogCardFull } from "./components/BlogCardFull"
 
 const Navbar = () => { 
   return(
@@ -41,14 +41,9 @@ const App = () => {
 
   const matchUser = useMatch('/users/:id')
   const userToMatch = matchUser
-    ? users.find(usr => usr.id === matchUser.params.id)
+    ? (users && users.find(usr => usr.id === matchUser.params.id))
     : null
-
-  const matchBlog = useMatch('/blogs/:id')
-  const blogs = useSelector(state => state.blogs)
-  const blogToMatch = matchBlog
-    ? blogs.find(blog => blog._id === matchBlog.params.id)
-    : null
+ 
   return (
     <div className="flex flex-col">
       <Navbar />
@@ -60,9 +55,7 @@ const App = () => {
             <Route path="/blogs" element={<Blogs/>} />
             <Route path="/users" element={ <UsersList users={users}/>} />
             <Route path="/users/:id" element={<UserCard user={userToMatch}/>} />
-            <Route path="/blogs/:id" element={<BlogCard 
-            blog={blogToMatch}
-            user={user}/>} />
+            <Route path="/blogs/:id" element={<BlogCardFull user={user}/>} />
         </Routes>
       </div>
       </div>
